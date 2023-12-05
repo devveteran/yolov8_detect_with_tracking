@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import onnxruntime
 
-from yolov8.utils import xywh2xyxy, draw_detections, multiclass_nms
+from yolov8.utils import nms, xywh2xyxy, draw_detections, multiclass_nms
 
 
 class YOLOv8:
@@ -77,8 +77,9 @@ class YOLOv8:
         boxes = self.extract_boxes(predictions)
 
         # Apply non-maxima suppression to suppress weak, overlapping bounding boxes
-        # indices = nms(boxes, scores, self.iou_threshold)
-        indices = multiclass_nms(boxes, scores, class_ids, self.iou_threshold)
+        indices = nms(boxes, scores, self.iou_threshold)
+        # indices = multiclass_nms(boxes, scores, class_ids, self.iou_threshold)
+        # indices = cv2.dnn.NMSBoxes(boxes, scores, 0.25, 0.45, 0.5)
 
         return boxes[indices], scores[indices], class_ids[indices]
 
