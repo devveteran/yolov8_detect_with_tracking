@@ -137,6 +137,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--tracker', type=str, default='SORT',
         help="Tracker used to track objects. Options include ['CentroidTracker', 'CentroidKF_Tracker', 'SORT']")
+    
     args = parser.parse_args()
 
     if args.tracker == 'CentroidTracker':
